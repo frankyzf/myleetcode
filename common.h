@@ -21,6 +21,7 @@
 #include <tuple>
 #include <functional>
 #include <cstring>
+#include <bitset>
 
 using namespace std;
 
