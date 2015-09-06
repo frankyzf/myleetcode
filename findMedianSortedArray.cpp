@@ -1,4 +1,4 @@
-#inlcude "common.h"
+#include "common.h"
 
 class Solution {
 public:

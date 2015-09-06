@@ -20,6 +20,7 @@
 #include <ctype.h>
 #include <tuple>
 #include <functional>
+#include <cstring>
 
 using namespace std;
 
