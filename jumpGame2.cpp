@@ -9,7 +9,7 @@ public:
         int range = nums[0];
         int base = 0;
         bool valid = false;
-        while(valid == false && range >0){
+        while(!valid && range >0){
             ++ step;
             int end = base + range;
             if(end >= size-1)
