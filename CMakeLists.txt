@@ -88,3 +88,8 @@ add_executable( sortarray   sortarray.cpp )
 add_executable( titleToNumber   titleToNumber.cpp )
 add_executable( tmp   tmp.cpp )
 add_executable( trailingZeroes   trailingZeroes.cpp )
+
+
+#add_executable(buildTreeFromPreorderAndInOrder buildTreeFromPreorderAndInOrder.cpp)
+add_executable(hindex2 hindex2.cpp)
+add_executable(hindex hIndex.cpp)
