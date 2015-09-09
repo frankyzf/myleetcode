@@ -95,3 +95,7 @@ add_executable(hindex2 hindex2.cpp)
 add_executable(hindex hIndex.cpp)
 add_executable(IntegerToEnglish IntegerToEnglish.cpp)
 add_executable(missingNumbers missingNumbers.cpp)
+add_executable(nthuglynumber nthuglynumber.cpp)
+
+#not checked ye
+add_executable(threesum threesum.cpp)
