@@ -99,3 +99,4 @@ add_executable(nthuglynumber nthuglynumber.cpp)
 
 #not checked ye
 add_executable(threesum threesum.cpp)
+add_executable(fourSum fourSum.cpp)
