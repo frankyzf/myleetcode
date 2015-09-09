@@ -1,26 +1,28 @@
 #include "common.h"
-
+//not checked yet
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
         const int size = prices.size();
-        if(size == 0)
+        if(size < 2)
             return 0;
-        int max = numeric_limits<int>::min();
-        vector<int> high(size, max);
-        for(int i = size-1; i >= 0; --i){
-            if(max < prices[i])
-                max = prices[i];
-            high[i] = max;
+        int i = 0;
+        int sum = 0;
+        while(i < size){
+            while(i<size-1 && prices[i] > prices[i+1]){
+                ++i;
+            }
+            int  low = prices[i];
+            ++i;
+            while (i < size && prices[i] > prices[i - 1]) {
+                ++i;
+            }
+            int high = prices[i-1];
+            sum += (high - low);
         }
-
-        int profit = 0;
-        for(int i = 0; i < size-1; ++i){
-            if(profit < (high[i+1] - prices[i]))
-                profit = (high[i+1] - prices[i]);
-        }
-        return profit;
+        return sum
     }
+
 };
 
 

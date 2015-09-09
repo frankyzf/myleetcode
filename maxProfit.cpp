@@ -1,34 +1,26 @@
 #include "common.h"
+//not checked yet
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-        auto findl = [&prices](int i){
-            const int size = prices.size();
-            while(i+1 < size &&  prices[i+1] < prices[i])
-                ++i;
-            return i;
-        };
-
-        auto findh = [&prices](int i){
-            const int size = prices.size();
-            while(i+1 < size &&  prices[i+1] >= prices[i])
-                ++i;
-            return i;
-        };
-
-        auto f = [&prices, &findl, &findh](int start, int tend){
-            int profit = 0;
-            start = findl(start);
-            int end = findh(start);
-            while(start < tend){
-                profit += (prices[end] - prices[start]);
-                start = findl(end+1);
-                end = findh(start);
+        if (prices.size() < 2)
+            return 0;
+        vector<int> hv;
+        int h = numeric_limits<int>::min();
+        for (int i = prices.size() - 1; i >= 0; --i) {
+            if (h < prices[i]) {
+                h = prices[i];
             }
-            return profit;
-        };
-
-        return f(0, prices.size());
+            hv.push_back(h);
+        }
+        reverse(hv.begin(), hv.end());
+        int res = numeric_limits<int>::min();
+        for(int i = 0; i < prices.size() -1; ++i){
+            if (res < hv[i+1] - prices[i]){
+                res = hv[i+1] - prices[i];
+            }
+        }
+        return res;
     }
 };
 
