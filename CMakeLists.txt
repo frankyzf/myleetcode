@@ -41,7 +41,6 @@ add_executable(wordsearch wordsearch.cpp)
 add_executable(wordSearch wordSearch.cpp)
 add_executable(wordbreak wordbreak.cpp)
 add_executable(twoSum twoSum.cpp)
-add_executable(threeSumClosest threeSumClosest.cpp)
 add_executable(maxsubarray maxsubarray.cpp)
 add_executable(rotate rotate.cpp)
 add_executable(rotateRight rotateRight.cpp)
@@ -99,4 +98,5 @@ add_executable(nthuglynumber nthuglynumber.cpp)
 
 #not checked ye
 add_executable(threesum threesum.cpp)
+add_executable(threeSumClosest threeSumClosest.cpp)
 add_executable(fourSum fourSum.cpp)
