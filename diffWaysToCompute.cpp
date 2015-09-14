@@ -6,54 +6,37 @@
 class Solution {
 public:
     vector<int> diffWaysToCompute(string input) {
-        vector<char> op;
-        vector<int> data;
-        vector<int> perm;
-        int i;
-        char c;
-        istringstream ss(input);
-        while(ss >> i >> c){
-            data.push_back(i);
-            op.push_back(c);
-        }
-        data.push_back(i);
-        const int size = op.size();
-        for(int i = 0; i < size; ++i) {
-            perm.push_back(i);
-        }
-        vector<int> res;
-        while(next_permutation(perm.begin(), perm.end()))
-        {
-            for (auto p: perm)
-                cout << "p:" << p  << ",";
-            cout << endl;
-
-            int r ;
-            vector<int> nd(data.begin(), data.end());
-            for( int seq = 0; seq < size; ++seq)
-            {
-                int i = distance(perm.begin(), find(perm.begin(), perm.end(), seq) );
-                int& k = nd[i];
-                switch(op[i])
-                {
-                    case '*':
-                        k *= nd[i+1];
-                        break;
-                    case '-':
-                        k -= nd[i+1];
-                        break;
-                    case '+':
-                        k += nd[i+1];
-                        break;
-                    default:
-                        break;
+        function<vector<int>(string)> f = [&f](string str) {
+            vector<int> res;
+            for (int m = 0; m < str.length(); ++m) {
+                if (str[m] == '-' || str[m] == '+' || str[m] == '*') {
+                    vector<int> left = f(str.substr(0, m));
+                    vector<int> right = f(str.substr(m+1));
+                    for (auto i = left.begin(); i != left.end(); ++i) {
+                        for (auto j = right.begin(); j != right.end(); ++j) {
+                            switch(str[m]){
+                                case '+':
+                                    res.push_back((*i)+(*j));
+                                    break;
+                                case '-':
+                                    res.push_back((*i) - (*j));
+                                    break;
+                                case '*':
+                                    res.push_back((*i) * (*j));
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
                 }
-                nd[i+1] = k;
-                r = k;
             }
-            res.push_back(r);
-        }
-        sort(res.begin(), res.end());
+            if(res.empty()){
+                res.push_back(atoi(str.c_str()));
+            }
+            return res;
+        };
+        auto res = f(input);
         return res;
     }
 };
