@@ -100,9 +100,10 @@ add_executable(containsNearbyAlmostDuplicate containsNearbyAlmostDuplicate.cpp)
 add_executable(maxProfit maxProfit.cpp)
 add_executable(maxProfit2 maxProfit2.cpp)
 add_executable(maxProfit3 maxProfit3.cpp)
+add_executable(maxprofit4 maxprofit4.cpp)
 
 #not checked ye
 add_executable(threeSumClosest threeSumClosest.cpp)
 add_executable(fourSum fourSum.cpp)
 add_executable(LRUCache LRUCache.cpp)
-add_executable(maxprofit4 maxprofit4.cpp)
+add_executable(numIsIands numIsIands.cpp)
