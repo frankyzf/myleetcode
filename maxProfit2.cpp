@@ -1,5 +1,4 @@
 #include "common.h"
-//not checked yet
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
