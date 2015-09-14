@@ -9,37 +9,33 @@ public:
 
 
     int kthSmallest(TreeNode* root, int k) {
-        int cnt = 0, res = 0;
-        TreeNode* cur = root, * prev = nullptr;
-        while(cur != nullptr && cnt < k)
-        {
-            if(cur->left == nullptr)
-            {
-                ++cnt;
-                if(cnt == k)
-                    res = cur->val;
-                cur = cur->right;
+        function<int(TreeNode*)> cn = [&cn](TreeNode* root){
+            if(root == nullptr)
+                return 0;
+            else{
+                return cn(root->left) + cn(root->right) + 1;
+            }
+        };
+        function<TreeNode*(TreeNode*, int)> f = [&f, &cn](TreeNode* root, int k){
+            if(k == 1){
+              while(root->left){
+                  root = root->left;
+              }
+              return root;
+            }
+            int ln = cn(root->left);
+            if(ln > k-1){
+                return f(root->left, k);
+            }
+            else if (ln ==  k-1){
+                return root;
             }
             else{
-                prev = cur->left;
-                while(prev->right != nullptr && prev->right != cur)
-                    prev = prev->right;
-                if(prev->right == nullptr)
-                {
-                    prev->right = cur;
-                    cur = cur->left;
-                }
-                else
-                {
-                    prev->right = nullptr;
-                    ++cnt;
-                    if(cnt == k)
-                        res = cur->val;
-                    cur = cur->right;
-                }
+                return f(root->right, k - ln -1);
             }
-        }
-        return res;
+        };
+        auto node = f(root, k);
+        return node->val;
     }
 };
 
