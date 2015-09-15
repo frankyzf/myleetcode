@@ -22,7 +22,7 @@
 #include <functional>
 #include <cstring>
 #include <bitset>
-
+#include <assert.h>
 
 using namespace std;
 

@@ -108,4 +108,6 @@ add_executable(rob2 rob2.cpp)
 add_executable(threeSumClosest threeSumClosest.cpp)
 add_executable(fourSum fourSum.cpp)
 add_executable(LRUCache LRUCache.cpp)
+
 add_executable(majorityelement majorityelement.cpp)
+add_executable(maxsquare maxsquare.cpp)
