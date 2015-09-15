@@ -9,8 +9,7 @@ class Solution {
 public:
     vector<int> majorityElement(vector<int>& nums) {
         const int size = nums.size();
-        if(size < 3)
-            return nums;
+
         vector<int> res;
         vector<int> cnt;
         for(int i = 0; i < size; ++i){
