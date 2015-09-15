@@ -106,7 +106,7 @@ add_executable(rob2 rob2.cpp)
 add_executable(maxsquare maxsquare.cpp)
 add_executable(majorityelement majorityelement.cpp)
 add_executable(minSubArrayLen minSubArrayLen.cpp)
-
+add_executable(myTrie myTrie.cpp)
 
 #not checked ye
 add_executable(threeSumClosest threeSumClosest.cpp)
