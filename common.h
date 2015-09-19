@@ -58,20 +58,23 @@ TreeNode* constructTree(vector<string>& con){
             for (int i = 0; i < n; ++i) {
                 TreeNode *pp = q.front();
                 q.pop();
-                if (con[ci] == "#") {
-                    pp->left = nullptr;
+
+                if( ci < con.size() && con[ci] != string("#")) {
+                    pp->left = new TreeNode(atoi(con[ci].c_str()));
+                    q.push(pp->left);
                 }
                 else {
-                    pp->left = new TreeNode(atoi(s.c_str()));
-                    q.push(pp->left);
+                    pp->left = nullptr;
                 }
                 ++ci;
 
-                if (con[ci] == "#")
-                    pp->right = nullptr;
-                else {
-                    pp->right = new TreeNode(atoi(s.c_str()));
+
+                if( ci < con.size() && con[ci] != string("#")) {
+                    pp->right = new TreeNode(atoi(con[ci].c_str()));
                     q.push(pp->right);
+                }
+                else{
+                    pp->right = nullptr;
                 }
                 ++ci;
             }
