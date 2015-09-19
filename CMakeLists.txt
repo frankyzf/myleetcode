@@ -107,7 +107,9 @@ add_executable(maxsquare maxsquare.cpp)
 add_executable(majorityelement majorityelement.cpp)
 add_executable(minSubArrayLen minSubArrayLen.cpp)
 add_executable(myTrie myTrie.cpp)
-
+add_executable(canFinish canFinish.cpp)
+add_executable(addOperator addOperator.cpp)
+add_executable(candy candy.cpp)
 #not checked ye
 add_executable(threeSumClosest threeSumClosest.cpp)
 add_executable(fourSum fourSum.cpp)
