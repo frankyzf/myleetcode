@@ -45,31 +45,36 @@ using namespace std;
 
 TreeNode* constructTree(vector<string>& con){
     TreeNode* root = nullptr;
-    queue<TreeNode*> q;
-    root = new TreeNode(atoi(con[0].c_str()));
-    q.push(root);
+    if(con.size() > 0) {
 
-    int ci = 1;
-    while(ci < con.size()){
-        int n = q.size();
-        for (int i = 0; i < n; ++i) {
-            TreeNode* pp = q.front(); q.pop();
-            if (con[ci] == "#") {
-                pp->left = nullptr;
-            }
-            else {
-                pp->left = new TreeNode(atoi(s.c_str()));
-                q.push(pp->left);
-            }
-            ++ci;
 
-            if(con[ci] == "#")
-                pp->right = nullptr;
-            else{
-                pp->right = new TreeNode(atoi(s.c_str()));
-                q.push(pp->right);
+        queue<TreeNode *> q;
+        root = new TreeNode(atoi(con[0].c_str()));
+        q.push(root);
+
+        int ci = 1;
+        while (ci < con.size()) {
+            int n = q.size();
+            for (int i = 0; i < n; ++i) {
+                TreeNode *pp = q.front();
+                q.pop();
+                if (con[ci] == "#") {
+                    pp->left = nullptr;
+                }
+                else {
+                    pp->left = new TreeNode(atoi(s.c_str()));
+                    q.push(pp->left);
+                }
+                ++ci;
+
+                if (con[ci] == "#")
+                    pp->right = nullptr;
+                else {
+                    pp->right = new TreeNode(atoi(s.c_str()));
+                    q.push(pp->right);
+                }
+                ++ci;
             }
-            ++ci;
         }
     }
     return root;
