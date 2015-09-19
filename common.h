@@ -24,6 +24,7 @@
 #include <bitset>
 #include <assert.h>
 
+#define DEBUG
 using namespace std;
 
 
@@ -41,6 +42,7 @@ using namespace std;
         ListNode *next;
         ListNode(int x) : val(x), next(NULL) {}
     };
+
 
 
 #endif //NEW_LEETCODE_COMMON_H

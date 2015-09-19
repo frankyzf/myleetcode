@@ -16,28 +16,32 @@ public:
                 left = 1;
             }
         }
-//        for(auto c: candies)
-//            cout << c << ";";
-//        cout << endl;
+#ifdef DEBUG
+        for(auto c: candies)
+            cout << c << ";";
+        cout << endl;
+#endif
         int right = candies[size-1];
         for (int j = size -2; j >= 0; --j) {
             if(ratings[j] > ratings[j+1]){
-                candies[j] = max(candies[j], ++right);
+                ++right;
+                candies[j] = max(candies[j], right);
             }
             else{
-                right = ratings[j];
+                right = candies[j];
             }
         }
- //       for(auto c: candies)
- //           cout << c << ";";
- //       cout << endl;
-
+#ifdef DEBUG
+        for(auto c: candies)
+            cout << c << ";";
+        cout << endl;
+#endif
         return accumulate(candies.begin(), candies.end(), 0);
     }
 };
 
 int main() {
-    vector<int> data{2,1};
+    vector<int> data{1,0,2};
     cout << Solution().candy(data);
     return 1;
 }
