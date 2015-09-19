@@ -110,6 +110,7 @@ add_executable(myTrie myTrie.cpp)
 add_executable(canFinish canFinish.cpp)
 add_executable(addOperator addOperator.cpp)
 add_executable(candy candy.cpp)
+add_executable(postorderTraverse postorderTraverse.cpp)
 #not checked ye
 add_executable(threeSumClosest threeSumClosest.cpp)
 add_executable(fourSum fourSum.cpp)
