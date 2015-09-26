@@ -132,6 +132,7 @@ add_executable(cloneGraph cloneGraph.cpp)
 add_executable(numTree numTree.cpp)
 add_executable(generateTrees generateTrees.cpp)
 add_executable(pathSum pathSum.cpp)
+add_executable(isValidBST isValidBST.cpp)
 #not checked ye
 
 add_executable(threeSumClosest threeSumClosest.cpp)
