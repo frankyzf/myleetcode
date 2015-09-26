@@ -129,6 +129,7 @@ add_executable(reverseList reverseList.cpp)
 add_executable(deleteDuplicate deleteDuplicate.cpp)
 add_executable(findOrder findOrder.cpp)
 add_executable(cloneGraph cloneGraph.cpp)
+add_executable(numTree numTree.cpp)
 #not checked ye
 
 add_executable(threeSumClosest threeSumClosest.cpp)
