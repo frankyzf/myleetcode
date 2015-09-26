@@ -130,6 +130,7 @@ add_executable(deleteDuplicate deleteDuplicate.cpp)
 add_executable(findOrder findOrder.cpp)
 add_executable(cloneGraph cloneGraph.cpp)
 add_executable(numTree numTree.cpp)
+add_executable(generateTrees generateTrees.cpp)
 #not checked ye
 
 add_executable(threeSumClosest threeSumClosest.cpp)
