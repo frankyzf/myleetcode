@@ -19,7 +19,7 @@ public:
             int high = prices[i-1];
             sum += (high - low);
         }
-        return sum
+        return sum;
     }
 
 };
