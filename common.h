@@ -23,6 +23,7 @@
 #include <cstring>
 #include <bitset>
 #include <assert.h>
+#include <tuple>
 
 #define DEBUG
 using namespace std;
@@ -42,6 +43,22 @@ using namespace std;
         ListNode *next;
         ListNode(int x) : val(x), next(NULL) {}
     };
+
+ struct UndirectedGraphNode {
+         int label;
+         vector<UndirectedGraphNode *> neighbors;
+         UndirectedGraphNode(int x) : label(x) {};
+     };
+
+ListNode* constructList(vector<int> data){
+    ListNode* root = nullptr;
+    ListNode** pp = &root;
+    for(auto i: data){
+        *pp = new ListNode(i);
+        pp = &(*pp)->next;
+    }
+    return root;
+}
 
 TreeNode* constructTree(vector<string>& con){
     TreeNode* root = nullptr;
