@@ -135,6 +135,7 @@ add_executable(pathSum pathSum.cpp)
 add_executable(isValidBST isValidBST.cpp)
 add_executable(reverseBetween reversetBetween.cpp)
 add_executable(reorderList reorderList.cpp)
+add_executable(romanToInt romanToInt.cpp)
 #not checked ye
 
 add_executable(threeSumClosest threeSumClosest.cpp)
