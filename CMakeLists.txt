@@ -133,6 +133,7 @@ add_executable(numTree numTree.cpp)
 add_executable(generateTrees generateTrees.cpp)
 add_executable(pathSum pathSum.cpp)
 add_executable(isValidBST isValidBST.cpp)
+add_executable(reverseBetween reversetBetween.cpp)
 #not checked ye
 
 add_executable(threeSumClosest threeSumClosest.cpp)
