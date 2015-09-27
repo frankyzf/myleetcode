@@ -138,6 +138,8 @@ add_executable(reorderList reorderList.cpp)
 add_executable(romanToInt romanToInt.cpp)
 add_executable(lettercombination lettercombination.cpp)
 add_executable(generateParenthesis generateParenthesis.cpp)
+add_executable(isMatch2 isMatch2.cpp)
+add_executable(reverseGroup reverseGroup.cpp)
 #not checked ye
 
 add_executable(threeSumClosest threeSumClosest.cpp)
