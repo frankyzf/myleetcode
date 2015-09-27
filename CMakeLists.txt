@@ -142,6 +142,7 @@ add_executable(isMatch2 isMatch2.cpp)
 add_executable(reverseGroup reverseGroup.cpp)
 add_executable(longestValidParentheses longestValidParentheses.cpp)
 add_executable(firstMissingPositive firstMissingPositive.cpp)
+add_executable(countAndSay countAndSay.cpp)
 #not checked ye
 
 add_executable(threeSumClosest threeSumClosest.cpp)
