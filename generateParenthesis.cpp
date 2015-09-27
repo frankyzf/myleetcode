@@ -18,6 +18,10 @@ public:
                         tmp.insert(move(tmpstr));
                     }
                 }
+                string tmpstr(str);
+                if(tmpstr.back() != '(')
+                    tmpstr.push_back('(');
+                tmp.insert(move(tmpstr));
             }
             //right parenthensis
             set<string> tmp2;
