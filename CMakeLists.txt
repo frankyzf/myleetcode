@@ -154,3 +154,5 @@ add_executable(threeSumClosest threeSumClosest.cpp)
 add_executable(fourSum fourSum.cpp)
 add_executable(LRUCache LRUCache.cpp)
 
+add_executable(maxProduct maxProduct.cpp)
+
