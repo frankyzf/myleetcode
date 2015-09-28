@@ -50,6 +50,24 @@ using namespace std;
          UndirectedGraphNode(int x) : label(x) {};
      };
 
+ struct RandomListNode {
+         int label;
+         RandomListNode *next, *random;
+         RandomListNode(int x) : label(x), next(NULL), random(NULL) {}
+};
+
+RandomListNode* constructRandomList(vector<int> data){
+    RandomListNode* root = nullptr;
+    RandomListNode** pp = &root;
+    for(auto i: data){
+        *pp = new RandomListNode(i);
+        pp = &(*pp)->next;
+    }
+    return root;
+}
+
+
+
 ListNode* constructList(vector<int> data){
     ListNode* root = nullptr;
     ListNode** pp = &root;

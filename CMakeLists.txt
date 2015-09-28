@@ -155,4 +155,6 @@ add_executable(fourSum fourSum.cpp)
 add_executable(LRUCache LRUCache.cpp)
 
 add_executable(maxProduct maxProduct.cpp)
+add_executable(copyRandomList copyRandomList.cpp)
+add_executable(insertionSortList insertionSortList.cpp)
 
