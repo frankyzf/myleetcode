@@ -149,7 +149,7 @@ add_executable(solveSoduku solveSoduku.cpp)
 add_executable(sumTree sumTree.cpp)
 add_executable(sortedArrayToBST sortedArrayToBST.cpp)
 add_executable(sortedListToBST sortedListToBST.cpp)
-
+add_executable(solve solve.cpp)
 add_executable(threeSumClosest threeSumClosest.cpp)
 add_executable(fourSum fourSum.cpp)
 add_executable(LRUCache LRUCache.cpp)
