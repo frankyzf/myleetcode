@@ -163,3 +163,4 @@ add_executable(buildTreeFromPreorderAndInOrder buildTreeFromPreorderAndInOrder.c
 add_executable(buildTree buildTree.cpp)
 
 add_executable(uniquePathsWithObstacles uniquePathsWithObstacles.cpp)
+add_executable(multiplystring multiplystring.cpp)
