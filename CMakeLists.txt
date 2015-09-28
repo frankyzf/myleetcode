@@ -160,3 +160,4 @@ add_executable(insertionSortList insertionSortList.cpp)
 
 add_executable(minDistance minDistance.cpp)
 add_executable(buildTreeFromPreorderAndInOrder buildTreeFromPreorderAndInOrder.cpp)
+add_executable(buildTree buildTree.cpp)
