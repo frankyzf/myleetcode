@@ -145,6 +145,8 @@ add_executable(firstMissingPositive firstMissingPositive.cpp)
 add_executable(countAndSay countAndSay.cpp)
 #not checked ye
 add_executable(combinationSum combinationSum.cpp)
+add_executable(solveSoduku solveSoduku.cpp)
+add_executable(sumTree sumTree.cpp)
 
 add_executable(threeSumClosest threeSumClosest.cpp)
 add_executable(fourSum fourSum.cpp)
