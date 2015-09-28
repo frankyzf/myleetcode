@@ -158,3 +158,4 @@ add_executable(maxProduct maxProduct.cpp)
 add_executable(copyRandomList copyRandomList.cpp)
 add_executable(insertionSortList insertionSortList.cpp)
 
+add_executable(minDistance minDistance.cpp)
