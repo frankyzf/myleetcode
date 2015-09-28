@@ -38,6 +38,12 @@ using namespace std;
      TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  };
 
+struct TreeLinkNode {
+    TreeLinkNode *left;
+    TreeLinkNode *right;
+    TreeLinkNode *next;
+}
+
  struct ListNode {
         int val;
         ListNode *next;
