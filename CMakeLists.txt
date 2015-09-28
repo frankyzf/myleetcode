@@ -164,3 +164,4 @@ add_executable(buildTree buildTree.cpp)
 
 add_executable(uniquePathsWithObstacles uniquePathsWithObstacles.cpp)
 add_executable(multiplystring multiplystring.cpp)
+add_executable(insertmerge insertmerge.cpp)
