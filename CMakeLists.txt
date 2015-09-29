@@ -173,3 +173,4 @@ add_executable(findLadder findLadder.cpp)
 
 add_executable(fullJustify fullJustify.cpp)
 add_executable(partition partition.cpp)
+add_executable(minCut minCut.cpp)
