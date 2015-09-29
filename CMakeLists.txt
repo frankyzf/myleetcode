@@ -169,3 +169,7 @@ add_executable(merge merge.cpp)
 add_executable(permutateUniq permutateUniq.cpp)
 add_executable(ladderlength ladderlength.cpp)
 add_executable(findLadder findLadder.cpp)
+
+
+add_executable(fullJustify fullJustify.cpp)
+add_executable(partition partition.cpp)
