@@ -179,3 +179,4 @@ add_executable(maximalRectangle maximalRectangle.cpp)
 
 add_executable(wordPattern wordPattern.cpp)
 add_executable(setZeroes setZeroes.cpp)
+add_executable(subsetWithDup    subsetWithDup.cpp)
