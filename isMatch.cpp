@@ -64,6 +64,7 @@ public:
 
 
 int main() {
+
     cout << boolalpha <<  Solution().isMatch("aa", ".*");
     return 1;
 }
