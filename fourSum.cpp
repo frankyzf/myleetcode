@@ -7,83 +7,55 @@ public:
     vector<vector<int> > fourSum(vector<int> &num, int target) {
         vector<vector<int>> res;
         sort(num.begin(), num.end());
-
-        function<void(int, const map<int, vector<int>>&)> f
-                = [&f,&num, &res](int t, int k,  unordered_map<int, vector<int>>& mysort){
-            if(k ==1){
-                for (auto it = mysort.begin(); it < mysort.end(); ++it) {
-                    auto rangeit = equal_range(num.begin(), num.end(), t - it->first);
-                    for(auto first = rangeit.first; first != rangeit.second; ++first){
-                        auto index = distance(num.begin(), first);
-                        if(find(it->second.begin(), it->second.end(), index) == it->second.end()){
-                            vector<int> v;
-                            for_each(it->second.begin(), it->second.end(), [&v, &num](int i){v.push_back(num[i]);});
-                            v.push_back(*first);
-                            sort(v.begin(), v.end());
+        unordered_map<int, vector<pair<int,int>>> mm;
+        for (int i = 0; i < num.size(); ++i) {
+            for (int j = i+1; j < num.size(); ++j) {
+                mm[num[i]+num[j]].emplace_back(i, j);
+            }
+        }
+        for(auto& v: mm){
+            int part1 = v.first;
+            int part2 = target - part1;
+            if(part1 == part2){
+                for(auto it1 = v.second.begin(); it1 != v.second.end(); ++it1){
+                    for(auto it2 = it1+1; it2 != v.second.end(); ++it2){
+                        vector<int> tv{it1->first, it1->second, it2->first, it2->second};
+                        sort(tv.begin(), tv.end());
+                        if(unique(tv.begin(), tv.end()) == tv.end())
+                            res.push_back(move(tv));
+                    }
+                }
+            }
+            else if (part1 < part2){
+                auto it = mm.find(part2);
+                if(it != mm.end()){
+                    for(auto& item1: v.second){
+                        for(auto& item2: it->second){
+                            vector<int> tv{item1.first, item1.second, item2.first, item2.second};
+                            sort(tv.begin(), tv.end());
+                            if(unique(tv.begin(), tv.end()) == tv.end())
+                                res.push_back(move(tv));
                         }
                     }
                 }
             }
-            else{
-
-            }
-        };
-        unordered_multimap<int, pair<int,int>> dp2;
-        unordered_multimap<int, vector<int> > dp3;
-        sort(num.begin(), num.end());
-
-        //2 num sum;
-        for(int i = 0; i < num.size() -1; ++i){
-            for(int j = i+1; j < num.size(); ++j){
-                int sum = num[i] + num[j];
-                dp2.insert(make_pair(sum, make_pair(i, j)));
-            }
         }
 
-        // 3 sum
-        auto it = dp2.begin();
-        while(it != dp2.end()){
-            int sum = it->first;
-            int first = it->second.first;
-            int second = it->second.second;
-            for(int j = 0; j < num.size(); ++j){
-                if(j != first && j != second){
-                    vector<int> v{first, second, j};
-                    sum += num[j];
-                    dp3.insert(make_pair(sum, move(v)));
-                }
+        set<vector<int>> rv;
+        for(auto pos: res){
+            vector<int> t;
+            for(auto i: pos){
+                t.push_back(num[i]);
             }
-            dp2.erase(it++);
+            rv.insert(move(t));
         }
-
-
-        for(int i = 0; i < num.size(); ++i){
-            auto rangeit = dp3.equal_range(target - num[i]);
-            auto firstit = rangeit.first;
-            if(firstit != dp3.end()){
-                while(firstit != rangeit.second) {
-                    if (find(firstit->second.begin(), firstit->second.end(), i) == firstit->second.end()) {
-                        vector<int> v;
-                        for_each(firstit->second.begin(), firstit->second.end(),
-                                 [&v, &num](int index){v.push_back(num[index]);});
-                        v.push_back(num[i]);
-                        sort(v.begin(), v.end());
-                        res.push_back(move(v));
-                    }
-                    ++firstit;
-                }
-            }
-        }
-
-        return res;
+        return vector<vector<int>>(rv.begin(), rv.end());
     }
-
-
 };
 
 
 int main() {
-    vector<int> data {1,0,-1,0,-2,2};
+    vector<int> data {-3,-2,-1,0,0,1,2,3};
 
     auto res = Solution().fourSum(data, 0);
     for (auto &v: res) {
