@@ -190,3 +190,7 @@ add_executable(getPermuation getPermuation.cpp)
 add_executable(divide divide.cpp)
 add_executable(canWinNim canWinNim.cpp)
 add_executable(zigzagLevelOrder zigzagLevelOrder.cpp)
+add_executable(maxPoints maxPoints.cpp)
+
+add_executable(recoverTree recoverTree.cpp)
+add_executable(findSubstring findSubstring.cpp)

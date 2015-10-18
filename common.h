@@ -24,6 +24,7 @@
 #include <bitset>
 #include <assert.h>
 #include <tuple>
+#include <list>
 
 #define DEBUG
 using namespace std;
@@ -61,6 +62,15 @@ struct TreeLinkNode {
          RandomListNode *next, *random;
          RandomListNode(int x) : label(x), next(NULL), random(NULL) {}
 };
+
+
+struct Point {
+        int x;
+        int y;
+        Point() : x(0), y(0) {}
+        Point(int a, int b) : x(a), y(b) {}
+    };
+
 
  struct Interval {
          int start;

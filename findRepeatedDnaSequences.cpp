@@ -18,35 +18,39 @@ Return:
 class Solution {
 public:
     vector<string> findRepeatedDnaSequences(string s) {
-        unordered_map<char, int> charmap  {{'A',0}, {'C',1}, {'G', 2}, {'T', 3}};
-        auto hashf = [&charmap](const string& ms){
-            unsigned  long l = 0;
-            for (int i = 0; i < 10; ++i) {
-               l += charmap[ms[i]];
-                l  = l << 4;
-            }
-            return l;
-        };
-
-        unordered_map<string, int, decltype(hashf)> mm(1, hashf);
         vector<string> res;
-        if(s.length() < 10) {
+        if(s.length()< 1)
             return res;
+        auto match = [&s](int start){
+            if(start + 19 >= s.length())
+                return false;
+            int start2 = start+10;
+            for (int i = 0; i < 10; ++i) {
+                if(s[start+i] != s[start2+i])
+                    return false;
+            }
+            return true;
+        };
+        int i = 0;
+        while(i < s.length()){
+            if(match(i)){
+                res.push_back(s.substr(i, 10));
+                while(i+1 < s.length() && s[i+1] ==s[i])
+                    ++i;
+            }
+            ++i;
         }
-        for(int i = 9; i < s.length()-9; ++i){
-            if(++mm[s.substr(i-9, 10)] == 2)
-                res.push_back(s.substr(i-9, 10));
-        }
+
         return res;
     }
 };
 
 
 int main(){
-    string s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT";
+    string s = "AAAAACCCCCAAAAACCCCCAAAAAGGGTTT";
     auto r = Solution().findRepeatedDnaSequences(s);
-    for(auto v: r){
-        cout << v << endl;
+    for(auto str: r){
+        cout << str << endl;
     }
     return 1;
 }
