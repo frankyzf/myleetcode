@@ -194,3 +194,5 @@ add_executable(maxPoints maxPoints.cpp)
 
 add_executable(recoverTree recoverTree.cpp)
 add_executable(findSubstring findSubstring.cpp)
+
+add_executable(medianFinder medianFinder.cpp)
