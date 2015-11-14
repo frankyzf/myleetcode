@@ -203,3 +203,4 @@ add_executable(getHint getHint.cpp)
 
 add_executable(lengthOfLIS lengthOfLIS.cpp)
 add_executable(NumArray NumArray.cpp)
+add_executable(NumMatrix NumMatrix.cpp)
