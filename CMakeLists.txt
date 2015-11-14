@@ -198,3 +198,8 @@ add_executable(findSubstring findSubstring.cpp)
 add_executable(medianFinder medianFinder.cpp)
 add_executable(isInterleave isInterleave.cpp)
 add_executable(codec codec.cpp)
+
+add_executable(getHint getHint.cpp)
+
+add_executable(lengthOfLIS lengthOfLIS.cpp)
+add_executable(NumArray NumArray.cpp)
