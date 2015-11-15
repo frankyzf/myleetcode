@@ -5,69 +5,55 @@ class Solution {
 public:
     vector<int> findSubstring(string s, vector<string>& words) {
         vector<int> res;
-        if(words.size() ==0 || s.length() == 0)
+        if(words.size() == 0 || s.length() < words[0].length() * words.size())
             return res;
-        const int len = words[0].length();
-        const int totallen = len * words.size();
-        int pos = 0;
-        unordered_multiset<string> dict(words.begin(), words.end());
 
-        for (int startpos = 0; startpos <= (int)s.length() - totallen; ++startpos) {
-            auto pos = startpos;
-            unordered_multimap<string, int> mm;
-            while (pos < s.length()&& mm.size() < dict.size() ) {
-                auto str = s.substr(pos, len);
-                if (dict.count(str)) {
-                    if(mm.count(str) < dict.count(str)){
-                        mm.insert(make_pair(str, pos));
-                    }
-                    else {
-                        auto cnt = mm.count(str);
-                        auto range = mm.equal_range(str);
-                        deque<int> rp;
-                        for (auto r = range.first; r != range.second ; ++r) {
-                            rp.push_back(r->second);
-                        }
-                        sort(rp.begin(), rp.end());
-                        for (; cnt >= dict.count(str) ; --cnt) {
-                            auto mit = mm.begin();
-                            while (mit != mm.end()) {
-                                if (mit->second <= rp[0]) {
-                                    mit = mm.erase(mit);
-                                }
-                                else
-                                    ++mit;
-                            }
-                            rp.pop_front();
-                        }
-                        if(pos > s.length()  - (totallen - len * mm.size()))
-                            break;
+        unordered_map<string, int> umm;
+        for(auto w:words){
+            umm[w]++;
+        }
+        const int wlen = words[0].length();
+        for (int i = 0; i < wlen; ++i) {
+            unordered_map<string, int> tmpmm;
+            int wcount = 0;
+            for ( int j = i; j <= s.length() - wlen; j += wlen) {
+                auto str = s.substr(j, wlen);
+                if(umm.count(str) == 0){
+                    wcount = 0;
+                    tmpmm.clear();
+                }
+                else{
+                    tmpmm[str]++;
+                    wcount ++;
+                    while(tmpmm[str] > umm[str]){
+                        auto ts = s.substr(j-wcount*wlen + wlen, wlen);
+                        tmpmm[ts] --;
+                        wcount --;
                     }
                 }
-                else {
-                    break;
+
+                if(wcount == words.size()){
+                    res.push_back(j - words.size()*wlen + wlen);
+                    auto headstr = s.substr(j - words.size()* wlen + wlen, wlen);
+                    tmpmm[headstr]--;
+                    wcount --;
                 }
-                pos+= len;
-            }
-            if(mm.size() == dict.size()){
-                res.push_back( min_element(mm.begin(), mm.end(),
-                [](const pair<const string, int>& left, const pair<const string, int>& right){
-                    return left.second < right.second;
-                })->second );
             }
         }
         return res;
     }
+
 };
 
 
 
 int main() {
-    string s = "a";
-    vector<string> dict {"a","a"};
+    string s = "wordgoodgoodgoodbestword";
+    vector<string> dict {"word","good","best","good"};
     auto res = Solution().findSubstring(s, dict);
     for(auto v: res){
         cout << v << ",";
     }
+    cout << "end" << endl;
     return 1;
 }
