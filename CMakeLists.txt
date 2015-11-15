@@ -205,3 +205,5 @@ add_executable(lengthOfLIS lengthOfLIS.cpp)
 add_executable(NumArray NumArray.cpp)
 add_executable(NumMatrix NumMatrix.cpp)
 add_executable(isNumber isNumber.cpp)
+
+add_executable(minWindows minWindows.cpp)
