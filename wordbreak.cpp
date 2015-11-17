@@ -2,50 +2,50 @@
 
 class Solution {
 public:
-    bool wordBreak(string s, unordered_set<string> &dict) {
-        std::vector<std::set<int>  > v;
-
-        set<int> cs;
-        cs.emplace(-1);
-        if(dict.find(s.substr(0,1)) != dict.end())
-            cs.emplace(0);
-        v.emplace_back(cs);
-
-        for (int i = 0; i < s.length(); ++i)
-        {
-            std::set<int>& pv = v[i];
-            std::set<int> cs = pv;
-            cs.emplace(-1);
-            for (std::set<int>::iterator it = pv.begin(); it != pv.end(); ++it)
-            {
-                int start = *it + 1;
-                int len = i - start +1;
-                if(dict.find(s.substr(start,len)) != dict.end())
-                {
-                    cs.insert(i);
-
+    vector<string> wordBreak(string s, unordered_set<string> &dict) {
+        vector<string> res;
+        unordered_map<char,vector<string> > capnum;
+        for_each(dict.begin(), dict.end(), [&](const string& str){capnum[str[0]].push_back(str);});
+        function<void(string, unordered_set<string>&, vector<string>& )> f
+                = [&](string str, unordered_set<string>& flag, vector<string>& vv){
+            if(str == ""){
+                string rs = vv[0];
+                for (int i = 1; i < vv.size(); ++i) {
+                    rs += " " + vv[i];
                 }
-                else
-                    cs.insert(start-1);
-
+                res.push_back(move(rs));
             }
+            if(flag.size() == dict.size())
+                return ;
+            if(capnum.count(str[0]) == 0)
+                return;
+            const auto& canv = capnum[str[0]];
+            for (auto ss:canv) {
+                if(flag.count(ss) == 0 && dict.count(ss)){
+                    flag.insert(ss);
+                    vv.push_back(ss);
+                    f(str.substr(ss.length()), flag, vv);
+                    flag.erase(ss);
+                    vv.pop_back();
+                }
+            }
+        };
+        unordered_set<string> flag;
+        vector<string> vv;
+        f(s,flag, vv);
+        return res;
 
-
-            v.emplace_back(cs);
-        }
-        auto eit = *(v.end() - 1);
-        auto size = s.length();
-
-
-        if(eit.find(size -1) != eit.end())
-            return true;
-        else
-            return false;
     }
 };
 
 
 int main() {
-
+    unordered_set<string>  dict = {"a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"};
+    string str = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab";
+    auto res = Solution().wordBreak(str, dict);
+    for(auto item: res){
+        cout << item << endl;
+    }
     return 1;
 }
