@@ -207,3 +207,4 @@ add_executable(NumMatrix NumMatrix.cpp)
 add_executable(isNumber isNumber.cpp)
 
 add_executable(minWindows minWindows.cpp)
+add_executable(isScramble isScramble.cpp)
