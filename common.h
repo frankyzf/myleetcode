@@ -25,6 +25,8 @@
 #include <assert.h>
 #include <tuple>
 #include <list>
+#include <memory>
+#include <cmath>
 
 #define DEBUG
 using namespace std;
