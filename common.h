@@ -27,6 +27,7 @@
 #include <list>
 #include <memory>
 #include <cmath>
+#include <functional>
 
 #define DEBUG
 using namespace std;
