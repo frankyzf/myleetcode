@@ -208,3 +208,7 @@ add_executable(isNumber isNumber.cpp)
 
 add_executable(minWindows minWindows.cpp)
 add_executable(isScramble isScramble.cpp)
+add_executable(numDistinct numDistinct.cpp)
+
+
+
