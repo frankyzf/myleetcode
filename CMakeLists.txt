@@ -211,5 +211,6 @@ add_executable(isScramble isScramble.cpp)
 add_executable(numDistinct numDistinct.cpp)
 
 add_executable(numArrayMutable numArrayMutable.cpp)
+add_executable(additiveNumber additiveNumber.cpp)
 
 
