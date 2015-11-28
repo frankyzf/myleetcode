@@ -65,20 +65,25 @@ public:
             queue<string> bt;
             bt.push(endWord);
             res.push_back(vector<string>{endWord});
+            unordered_map<string, int> index{{endWord, 0}};
             while(!bt.empty()){
                 auto w = bt.front(); bt.pop();
                 auto& v = ahead[w];
-                auto it = find_if(res.begin(), res.end(), [&w](const vector<string>& path){return *path.rbegin() == w;});
+                int ii = index[w];
+                index.erase(w);
+                auto it = res.begin() + ii;
                 if(it == res.end())
                     continue;
                 auto path = *it;
                 if(v.size() > 0){
                     it->push_back(v[0]);
                     bt.push(v[0]);
+                    index[v[0]] = ii;
                     for(int i = 1; i < v.size(); ++i){
                         path.push_back(v[i]);
                         res.push_back(path);
                         bt.push(v[i]);
+                        index[v[i]] = res.size() -1;
                         path.pop_back();
                     }
                 }
