@@ -11,25 +11,6 @@ public:
             res.push_back(vector<string>{beginWord});
             return res;
         }
-
-
-        //find candidates
-        auto findcandidates = [&wordList](const unordered_set<string> &used, string word){
-            vector<string> res;
-            for (int i = 0; i < word.length(); ++i) {
-                char oc = word[i];
-                for (int j = 0; j < 26; ++j) {
-                    if('a'+ j == oc)
-                        continue;
-                    word.replace(i, 1, 1, (char)('a' + j));
-                    if(used.count(word) == 0  && wordList.count(word) ){
-                        res.push_back(word);
-                    }
-                }
-                word.replace(i, 1,1,oc);
-            }
-            return res;
-        };
         auto diff = [&endWord](const string& str){
             int cnt = 0;
             for (int i = 0; i < str.length(); ++i) {
@@ -39,49 +20,73 @@ public:
             return cnt == 1;
         };
 
-        unordered_set<string> visited;
 
-        function<bool(unordered_map<string, vector<vector<string>>>&)> f =
-                [&f, &wordList, &endWord,findcandidates, &res, &diff, &visited]
-                        (unordered_map<string, vector<vector<string>>>& candidates ){
-                    if(candidates.size() == 0)
-                        return false;
-            unordered_map<string, vector<vector<string>> > mcan;
-            bool bFound = false;
-            for(auto it = candidates.begin(); it != candidates.end(); ++it){
-                visited.insert(it->first);
-                if(diff(it->first) ){
-                    for(auto& path: it->second){
-                        path.push_back(it->first);
-                        res.push_back(move(path));
-                    }
-                    bFound = true;
-                }
-                else{
-                    auto cc = findcandidates(visited, it->first);
-                    for(auto& item:cc){
-                        for(auto& path: it->second){
-                            path.push_back(it->first);
-                            mcan[item].push_back(path);
-                            path.pop_back();
-                        }
+        unordered_map<string, vector<string> > ahead;
+        //find candidates
+        auto findcandidates = [&wordList, &ahead](string word){
+            vector<string> res;
+            for (int i = 0; i < word.length(); ++i) {
+                char oc = word[i];
+                for (int j = 0; j < 26; ++j) {
+                    if('a'+ j == oc)
+                        continue;
+                    word.replace(i, 1, 1, (char)('a' + j));
+                    if(ahead.count(word) == 0 && wordList.count(word)){
+                        res.push_back(word);
                     }
                 }
+                word.replace(i, 1,1,oc);
             }
-
-            if(bFound)
-                return true;
-            else{
-                return f(mcan);
-            }
+            return res;
         };
 
-        visited.insert(beginWord);
-        unordered_map<string, vector<vector<string>>> path{{beginWord,{{}}}};
-        f(path);
-        for(auto& item: res)
-            item.push_back(endWord);
-        return res;
+        vector<string> candidates {beginWord};
+        bool bFound = false;
+
+        while(candidates.size() && bFound ==false){
+            vector<string> next;
+            for(auto& str: candidates){
+                if(diff(str)){
+                    ahead[endWord].push_back(str);
+                    bFound = true;
+                }
+                else if (!bFound){
+                    auto v = findcandidates(str);
+                    for(auto& w: v){
+                        ahead[w].push_back(str);
+                        next.push_back(w);
+                    }
+                }
+            }
+            candidates = move(next);
+        }
+        //backtrace
+        if(bFound){
+            queue<string> bt;
+            bt.push(endWord);
+            res.push_back(vector<string>{endWord});
+            while(!bt.empty()){
+                auto w = bt.front(); bt.pop();
+                auto& v = ahead[w];
+                auto it = find_if(res.begin(), res.end(), [&w](const vector<string>& path){return *path.rbegin() == w;});
+                if(it == res.end())
+                    continue;
+                auto path = *it;
+                if(v.size() > 0){
+                    it->push_back(v[0]);
+                    bt.push(v[0]);
+                    for(int i = 1; i < v.size(); ++i){
+                        path.push_back(v[i]);
+                        res.push_back(path);
+                        bt.push(v[i]);
+                        path.pop_back();
+                    }
+                }
+            }
+            for(auto& item: res)
+                reverse(item.begin(), item.end());
+            return res;
+        }
     }
 };
 
