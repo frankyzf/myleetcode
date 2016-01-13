@@ -3,95 +3,71 @@
 class Solution {
 public:
     vector<vector<string>> findLadders(string beginWord, string endWord, unordered_set<string> &wordList) {
-        vector<vector<string>> res;
-        if (wordList.size() == 0 || beginWord.length() == 0 || endWord.length() == 0) {
-            return res;
-        }
-        if (beginWord == endWord) {
-            res.push_back(vector<string>{beginWord});
-            return res;
-        }
-        auto diff = [&endWord](const string& str){
-            int cnt = 0;
-            for (int i = 0; i < str.length(); ++i) {
-                if(str[i] != endWord[i])
-                    cnt ++;
-            }
-            return cnt == 1;
-        };
-
-
-        unordered_map<string, vector<string> > ahead;
-        //find candidates
-        auto findcandidates = [&wordList, &ahead](string word){
-            vector<string> res;
-            for (int i = 0; i < word.length(); ++i) {
-                char oc = word[i];
-                for (int j = 0; j < 26; ++j) {
-                    if('a'+ j == oc)
-                        continue;
-                    word.replace(i, 1, 1, (char)('a' + j));
-                    if(ahead.count(word) == 0 && wordList.count(word)){
-                        res.push_back(word);
-                    }
-                }
-                word.replace(i, 1,1,oc);
-            }
-            return res;
-        };
-
-        vector<string> candidates {beginWord};
+        unordered_multimap<string, string> upstream;
+        vector<string> level;
+        level.push_back(beginWord);
         bool bFound = false;
+        string upword = "";
+        upstream.insert(make_pair(beginWord, upword));
 
-        while(candidates.size() && bFound ==false){
-            vector<string> next;
-            for(auto& str: candidates){
-                if(diff(str)){
-                    ahead[endWord].push_back(str);
-                    bFound = true;
-                }
-                else if (!bFound){
-                    auto v = findcandidates(str);
-                    for(auto& w: v){
-                        ahead[w].push_back(str);
-                        next.push_back(w);
+        while(!bFound && !level.empty()){
+            vector<string> l2;
+            std::set< pair<string, string> > up2;
+            for(auto word: level){
+                auto oword = word;
+                for(int i = 0; i < word.length(); ++i){
+                    unsigned char oc = word[i];
+                    unsigned char c = 'a';
+                    for(int j = 0 ; j < 26; ++j){
+                        if(c != oc){
+                            word[i] = c;
+                            if(word == endWord)
+                                bFound = true;
+                            if(wordList.count(word) && upstream.count(word) == 0){
+                                l2.push_back(word);
+                                up2.insert(make_pair(word, oword));
+                            }
+                        }
+                        ++c;
                     }
+                    word[i] = oc;
                 }
             }
-            candidates = move(next);
+
+            level.swap(l2);
+            for(auto& item: up2){
+                upstream.insert(item);
+            }
         }
-        //backtrace
+		
+		/*for (auto item : upstream)
+			cout << item.first << " : " << item.second << endl ;*/
+		
+        vector<vector<string>> res;
         if(bFound){
-            queue<string> bt;
-            bt.push(endWord);
-            res.push_back(vector<string>{endWord});
-            unordered_map<string, int> index{{endWord, 0}};
-            while(!bt.empty()){
-                auto w = bt.front(); bt.pop();
-                auto& v = ahead[w];
-                int ii = index[w];
-                index.erase(w);
-                auto it = res.begin() + ii;
-                if(it == res.end())
-                    continue;
-                auto path = *it;
-                if(v.size() > 0){
-                    it->push_back(v[0]);
-                    bt.push(v[0]);
-                    index[v[0]] = ii;
-                    for(int i = 1; i < v.size(); ++i){
-                        path.push_back(v[i]);
-                        res.push_back(path);
-                        bt.push(v[i]);
-                        index[v[i]] = res.size() -1;
-                        path.pop_back();
+			res.emplace_back(vector<string>{ endWord });
+            bool bend = false;
+            while(!bend){
+                vector<vector<string>> res2;
+                for(auto path: res){
+                    auto word = *path.rbegin();
+                    if(word == beginWord)
+                        bend = true;
+                    auto range = upstream.equal_range(word);
+                    for(auto it = range.first; it != range.second; ++it){
+                        auto path2 = path;
+                        path2.push_back(it->second);
+                        res2.push_back(move(path2));
                     }
                 }
+                res.swap(res2);
             }
-            for(auto& item: res)
-                reverse(item.begin(), item.end());
-            return res;
         }
+		for (auto& path : res) {
+			path.pop_back();
+			reverse(path.begin(), path.end());
+		}
+        return res;
     }
 };
 
