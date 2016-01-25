@@ -41,7 +41,7 @@ public:
 				return;
 			}
 			else {
-				while (!ops.empty() && isp[ops.top()] >= osp[ss]) {
+				while (!ops.empty() && isp[ops.top()] > osp[ss]) {
 					auto op = ops.top(); ops.pop();
 					if (op == "+" || op == "-") {
 						auto b = data.top(); data.pop();
@@ -54,11 +54,15 @@ public:
 						--on;
 					}
 				}
-				ops.push(ss);
-				if (ss == "+" || ss == "-") {
-					++on;
-					if (on > data.size())
-						data.push(0);
+				if (!ops.empty() && isp[ops.top()] == osp[ss])
+					ops.pop();
+				else {
+					ops.push(ss);
+					if (ss == "+" || ss == "-") {
+						++on;
+						if (on > data.size())
+							data.push(0);
+					}
 				}
 			}
 		};
