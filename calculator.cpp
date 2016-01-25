@@ -7,85 +7,77 @@
 
 class Solution {
 public:
+	string getToken(size_t pos, const string& str, size_t& nextpos) {
+		while (pos < str.length() && str[pos] == ' ')
+			++pos;
+		nextpos = pos;
+		if (pos >= str.length())
+			return "";
+		if (str[nextpos] == '+' || str[nextpos] == '-' || str[nextpos] == '(' || str[nextpos] == ')') {
+			++nextpos;
+		}
+		else {
+			while (nextpos < str.length() && isdigit(str[nextpos]))
+				++nextpos;
+		}
+		return str.substr(pos, nextpos - pos);
+	}
+
     int calculate(string s) {
-        map<char, int> precedence{{'(', 0}, {'+', 1}, {'-', 1}, {')', 2 } };
+		map<string, int> isp{ { "(", 1 },{ "+", 3 },{ "-", 3 },{ ")", 5 },{ "$", 0 } };
+		map<string, int> osp{ {"(", 5}, {"+", 2}, {"-", 2}, {")", 1 }, {"$", 0} };
         int val = 0;
-        const int len = s.length();
-        stack<char> st;
-        stack<int> data;
-        int i = 0;
-        while(i < len){
-            if(isdigit(s[i])){
-                string d;
-                do {
-                    d.push_back(s[i++]);
-                }while(isdigit(s[i]));
-                data.push(stoi(d));
-            }
+		int pos = 0;
+		stack<int> data;
+		stack<string> ops;
+		ops.push("$");
+		int on = 0;
+		size_t endpos = 0;
+		auto ss = getToken(pos, s, endpos);
+		auto process = [&](const string& ss) {
+			if (isdigit(ss[0])) {
+				auto n = atoi(ss.c_str());
+				data.push(n);
+				return;
+			}
+			else {
+				while (!ops.empty() && isp[ops.top()] >= osp[ss]) {
+					auto op = ops.top(); ops.pop();
+					if (op == "+" || op == "-") {
+						auto b = data.top(); data.pop();
+						auto a = data.top(); data.pop();
+						if (op == "+")
+							a += b;
+						else
+							a -= b;
+						data.push(a);
+						--on;
+					}
+				}
+				ops.push(ss);
+				if (ss == "+" || ss == "-") {
+					++on;
+					if (on > data.size())
+						data.push(0);
+				}
+			}
+		};
 
-            if(s[i] == '(')
-                st.push(s[i]);
-            else if (s[i] == ')' ){
-                stack<char> ops;
-                stack<int> ds;
-                while(st.top()!= '('){
-                    ds.push(data.top());
-                    data.pop();
-                    ops.push(st.top());
-                    st.pop();
-                };
-                st.pop();
-                if(!data.empty()){
-                    ds.push(data.top());
-                    data.pop();
-                }
-
-                while(!ops.empty()){
-                    char op = ops.top(); ops.pop();
-                    int a = ds.top(); ds.pop();
-                    int b = ds.top(); ds.pop();
-                    if(op == '+')
-                        ds.push(a+b);
-                    else // op == '-'
-                        ds.push(a-b);
-                }
-                if(!ds.empty())
-                    data.push(ds.top());
-            }
-            else if (s[i] == '+' || s[i] == '-'){
-                st.push(s[i]);
-            }
-            ++i;
-        }
-        stack<char> ops;
-        stack<int> ds;
-        while(!st.empty()){
-            ds.push(data.top());
-            data.pop();
-            ops.push(st.top());
-            st.pop();
-        };
-        if(!data.empty()) {
-            ds.push(data.top());
-            data.pop();
-        }
-        while(!ops.empty()){
-            char op = ops.top(); ops.pop();
-            int a = ds.top(); ds.pop();
-            int b = ds.top(); ds.pop();
-            if(op == '+')
-                ds.push(a+b);
-            else // op == '-'
-                ds.push(a-b);
-        }
-
-        return ds.top();
+		while (endpos < s.length() && ss != "") {
+			process(ss);
+			pos = endpos;
+			ss = getToken(pos, s, endpos);
+		}
+		if (ss != "")
+			process(ss);
+		process("$");
+        return data.top();
     }
 };
 
 
 
 int main(){
-    cout << Solution().calculate("(4+9)");
+    cout << Solution().calculate("-2 + ((4+9) - 7)");
     return 1;
 }

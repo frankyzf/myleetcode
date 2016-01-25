@@ -1,58 +1,46 @@
+//
+// Created by feng on 8/10/15.
+//
+
 #include "common.h"
+
+
 class Solution {
 public:
     bool exist(vector<vector<char>>& board, string word) {
-        const int rsize = board.size();
-        if(rsize == 0)
-            return false;
-        const int csize = board[0].size();
-        vector<vector<bool>> flags(rsize, vector<bool>(csize, false));
-        function<bool (int, int, int) > f = [&flags, &board, &word, csize, rsize, &f](int m, int n, int wi) {
-            if (wi >= word.length())
+       const int size = board.size();
+       const vector<pair<int, int>> round {make_pair(-1, 0), make_pair(1,0), make_pair(0,-1), make_pair(0, 1)};
+       vector<vector<bool>> flag(size, vector<bool>(size, false));
+
+       auto f = [&flag, &board, &word, &round, size](int i, int j, char ch, int n){
+           auto v = round[n];
+           int ni = i + v.first;
+           int nj = j+ v.second;
+           if(ni >= 0 && ni < size && nj >=0 && nj < size && board[ni][nj] == ch)
                 return true;
-            if (m < rsize - 1 && flags[m + 1][n] == false && board[m + 1][n] == word[wi]) {
-                flags[m + 1][n] = true;
-                if (f(m + 1, n, wi + 1))
-                    return true;
-                else {
-                    flags[m + 1][n] = false;
-                }
-            }
-            if (n < csize - 1 && flags[m][n + 1] == false && board[m][n + 1] == word[wi]) {
-                flags[m][n + 1] = true;
-                if (f(m, n + 1, wi + 1))
-                    return true;
-                else {
-                    flags[m][n + 1] = false;
-                }
-            }
-            if (m > 0 && flags[m - 1][n] == false && board[m - 1][n] == word[wi]) {
-                flags[m - 1][n] = true;
-                if (f(m - 1, n, wi + 1))
-                    return true;
-                else {
-                    flags[m - 1][n] = false;
-                }
-            }
-            if (n > 0 && flags[m][n - 1] == false && board[m][n - 1] == word[wi]) {
-                flags[m][n - 1] = true;
-                if (f(m, n - 1, wi + 1))
-                    return true;
-                else {
-                    flags[m][n - 1] = false;
-                }
-            }
-            return false;
-        };
+           return false;
+       };
 
+        for(int i = 0; i < size; ++i){
+            for(int j = 0; j < size; ++j){
+                for(auto& fg: flag)
+                    fg.assign( size, false );
+                if(word[0] == board[i][j]){
+                    stack<tuple<int, int, int>> st;
+                    st.push(make_tuple(i, j, 1));
+                    int pi, pj, si;
+                    while(!st.empty()){
+                        tie(pi, pj, si) = st.top();
+                        st.pop();
+                        if(si == word.length())
+                            return true;
+                        for(int nn = 0; nn < 4; ++nn){
+                            if(f(pi, pj, word[si], nn)){
+                                st.push(make_tuple(pi+round[nn].first, pi+round[nn].second, si+1));
+                            }
+                        }
+                    }
 
-        for(int i = 0; i < rsize; ++i){
-            for (int j = 0; j < csize; ++j){
-                if(board[i][j] == word[0]) {
-                    flags.assign(rsize, vector<bool>(csize, false));
-                    flags[i][j] = true;
-                    if (f(i, j, 1))
-                        return true;
                 }
             }
         }
@@ -60,9 +48,6 @@ public:
     }
 };
 
-
-
-int main() {
-
+int main(){
     return 1;
 }
