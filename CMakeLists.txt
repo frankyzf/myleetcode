@@ -3,7 +3,7 @@ project(myleetcode)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g")
 
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES main.cpp 335_selfCrossing.cpp)
 add_executable(myleetcode ${SOURCE_FILES})
 add_executable(totalNQueens totalNQueens.cpp)
 add_executable(longestconsective longestconsective.cpp)
@@ -213,4 +213,7 @@ add_executable(numDistinct numDistinct.cpp)
 add_executable(numArrayMutable numArrayMutable.cpp)
 add_executable(additiveNumber additiveNumber.cpp)
 add_executable(findMinHeightTrees findMinHeightTrees.cpp)
+
+
+add_executable(powerofthree 326_powerOfThree.cpp)
 
