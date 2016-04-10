@@ -216,4 +216,5 @@ add_executable(findMinHeightTrees findMinHeightTrees.cpp)
 
 
 add_executable(powerofthree 326_powerOfThree.cpp)
+add_executable(countingbit 338_countingBits.cpp)
 
